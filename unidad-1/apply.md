@@ -8,6 +8,8 @@
 Este Sistema Físico Interactivo logra cambiar el color de un cuadrado dibujado en p5 cuando un botón es presionado en el micro:bit.  
 Para ello, primero *[PENDING]*
 
+Describir como un sistema de 2 computadores - (cada uno con input y output) y procesamiento, cada input se debe procesar, como? eso se explica
+ 
 ### Actividad 06
 
 #### Control de movimiento con micro:bit
