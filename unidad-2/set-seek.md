@@ -8,7 +8,11 @@ En esta unidad vamos a profundizar un poco más en la programación del computad
 Vas a resolver problemas de programación en el micro:bit utilizando máquinas de estados.
 
 ### Actividad 1
-1. Describe detalladamente cómo funciona este ejemplo.
-2. ¿Cuáles son los estados en el programa?
-3. ¿Cuáles son los eventos/inputs en el programa?
-4. ¿Cuáles son las acciones en el programa?
+1. **Describe detalladamente cómo funciona este ejemplo.**  
+Este ejemplo crea 2 objetos `Pixel`, los inicializa con coordenadas e intervalos diferentes, y luego los actualiza constantemente por medio de un while. Algo notorio en el código es que no utiliza `sleep()`, sino intervalos de tiempo que no se interrumpen entre sí.
+2. **¿Cuáles son los estados en el programa?**  
+Está el estado `WaitTimeout` y el pseudo-estado `Init`.
+3. **¿Cuáles son los eventos/inputs en el programa?**  
+Sólo hay un evento, que es cuando pasa el tiempo especificado en el intervalo (`if utime.ticks_diff()`).
+4. **¿Cuáles son las acciones en el programa?**  
+El conteo del tiempo/"mirar la hora" (`self.startTime`), cambiar el estado de los Pixeles (`self.pixelState`), cambiar el estado del objeto (`self.state`)
