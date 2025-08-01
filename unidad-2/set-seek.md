@@ -71,3 +71,71 @@ while True:
     elif current == "Red":
         pixel3.update()
 ```
+
+### Actividad 03
+```python
+# Imports go at the top
+from microbit import *
+import utime
+
+STATE_INIT = 0
+STATE_HAPPY = 1
+STATE_SMILE = 2
+STATE_SAD = 3
+
+currentState = STATE_INIT
+startTime = 0
+intervalHappy = 1500
+intervalSmile = 1000
+intervalSad   = 2000
+
+def tarea1():
+    global currentState
+    global startTime
+    
+    if currentState == STATE_INIT:
+        display.show(Image.HAPPY)
+        startTime = utime.ticks_ms()
+        currentState = STATE_HAPPY
+        
+    elif currentState == STATE_HAPPY:
+        if button_a.was_pressed():
+            display.show(Image.SAD)
+            startTime = utime.ticks_ms()
+            currentState = STATE_SAD
+            
+        elif utime.ticks_diff(utime.ticks_ms(), startTime) > intervalHappy:
+            display.show(Image.SMILE)
+            startTime = utime.ticks_ms()
+            currentState = STATE_SMILE
+        
+    elif currentState == STATE_SMILE:
+        if utime.ticks_diff(utime.ticks_ms(), startTime) > intervalSmile:
+            display.show(Image.SAD)
+            startTime = utime.ticks_ms()
+            currentState = STATE_SAD
+
+        elif button_a.was_pressed():
+            display.show(Image.HAPPY)
+            startTime = utime.ticks_ms()
+            currentState = STATE_HAPPY
+        
+    elif currentState == STATE_SAD:
+        if button_a.was_pressed():
+            display.show(Image.SMILE)
+            startTime = utime.ticks_ms()
+            currentState = STATE_SMILE
+            
+        elif utime.ticks_diff(utime.ticks_ms(), startTime) > intervalSad:
+            display.show(Image.HAPPY)
+            startTime = utime.ticks_ms()
+            currentState = STATE_HAPPY
+        
+    else:
+        display.show(Image.SKULL)
+        #currentState = STATE_INIT
+
+# Code in a 'while True:' loop repeats forever
+while True:
+    tarea1()
+```
