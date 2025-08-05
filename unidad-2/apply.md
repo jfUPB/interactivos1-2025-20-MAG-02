@@ -15,3 +15,5 @@ El controlador funciona así:
 - Para volver a modo de configuración deberás tocar el botón touch.
 
 **Construye un diagrama detallado de la máquina de estados, incluyendo estados, eventos, transiciones y acciones.**
+
+Archivo iniciado en TEAMS
