@@ -73,6 +73,7 @@ while True:
 ```
 
 ### Actividad 03
+#### Controlando la pantalla con una máquina de estados y concurrencia
 ```python
 # Imports go at the top
 from microbit import *
@@ -139,3 +140,17 @@ def tarea1():
 while True:
     tarea1()
 ```
+- **Explica por qué decimos que este programa permite realizar de manera concurrente varias tareas.**  
+  Debido a que nunca utiliza métodos como `sleep()`, que no permitirían que nada más suceda por un lapso de tiempo. Cada frame el programa intenta ejecutar sus distintos objetivos sin interponerse sobre otros o interrumpirlos.
+- **Identifica los estados, eventos y acciones en el programa.**
+  - **Estados:** Init (es un pseudo-estado), Happy, Smile, y Sad.
+  - **Eventos:** Todos los eventos son el paso de lapsos de tiempo específicos para cada estado.
+  - **Acciones:** El Display de la imagen específica, iniciar el respectivo contador.
+- **Describe y aplica al menos 3 vectores de prueba para el programa. Para definir un vector de prueba debes llevar al sistema a un estado, generar los eventos y observar el estado siguiente y las acciones que ocurrirán. Por tanto, un vector de prueba tiene unas condiciones iniciales del sistema, unos resultados esperados y los resultados realmente obtenidos. Si el resultado obtenido es igual al esperado entonces el sistema pasó el vector de prueba, de lo contrario el sistema puede tener un error.**
+  - **Vector 1:** Estado Init.  
+    El programa empieza en el estado Init, y debe pasar correctamente al estado Happy. No hay condiciones iniciales específicas, pues es el momento inicial del programa.  
+    El resultado esperado es que el programa pase al estado Happy y aparezca en el *micro:bit* una carita feliz :>  
+    Este vector de prueba fue verificado en clase.
+
+
+
