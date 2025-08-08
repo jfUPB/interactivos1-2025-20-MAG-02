@@ -16,4 +16,5 @@ El controlador funciona así:
 
 **Construye un diagrama detallado de la máquina de estados, incluyendo estados, eventos, transiciones y acciones.**
 
-Archivo iniciado en TEAMS
+![Diagrama](DiagramaBomba.png)
+
