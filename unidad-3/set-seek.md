@@ -143,6 +143,5 @@ while True:
     semaforo4.update()
 ```
 
-## Actividad 03
-### Bomba 3.0
-
+#### Dudas sobre Set-Seek:
+1. No, en realidad tengo el tema bastanta entendido hasta ahora.
