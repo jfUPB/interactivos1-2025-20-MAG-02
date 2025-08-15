@@ -143,5 +143,9 @@ while True:
     semaforo4.update()
 ```
 
-#### Dudas sobre Set-Seek:
-1. No, en realidad tengo el tema bastanta entendido hasta ahora.
+### Estructura general de tabla
+|       | Hola! | Adiós!|
+-----|
+|Español| Hola! | Adiós!|
+|---|
+|Inglés | Hello!|Goodbye|
