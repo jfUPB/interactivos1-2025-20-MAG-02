@@ -143,9 +143,12 @@ while True:
     semaforo4.update()
 ```
 
-### Estructura general de tabla
-|       | Hola! | Adiós!|
------|
-|Español| Hola! | Adiós!|
-|---|
-|Inglés | Hello!|Goodbye|
+## Actividad 05
+### Es momento de modelar la bomba y definir vectores de prueba
+1. **Modelo de la Bomba 3.0 como Máquina de Estados:**
+2. **Tabla de Vectores de Prueba:**
+
+
+|       | Estado Inicial | Evento Disparador |         Acciones          | Estado Final |
+| :---: | :------------: | :---------------- | :------------------------ | :----------: |
+| 01    | STATE_CONFIG   | Pruebaaaaaaaaaaaaaa | Miremos qué tanto texto puedo embutir acá antes de que se dañe la tabla | STATE_ARMED  |
