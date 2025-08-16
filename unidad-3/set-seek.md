@@ -146,9 +146,28 @@ while True:
 ## Actividad 05
 ### Es momento de modelar la bomba y definir vectores de prueba
 1. **Modelo de la Bomba 3.0 como Máquina de Estados:**
+
+![Diagrama Bomba 3.0](Actividad05-Bomba3.png)
+
 2. **Tabla de Vectores de Prueba:**
 
 
-|       | Estado Inicial | Evento Disparador |         Acciones          | Estado Final |
-| :---: | :------------: | :---------------- | :------------------------ | :----------: |
-| 01    | STATE_CONFIG   | Pruebaaaaaaaaaaaaaa | Miremos qué tanto texto puedo embutir acá antes de que se dañe la tabla | STATE_ARMED  |
+|     | Estado Inicial | Evento Disparador | Acciones                                                                         | Estado Final |
+|:---:| :------------: | :---------------- | :------------------------------------------------------------------------------- | :----------: |
+|01   | STATE_INIT     | NO HAY EVENTO     |PASSWORD = \['A', 'B', 'A'], key = \[' ']*len(self.PASSWORD), keyindex = 0, count = 20, startTime = utime.ticks_ms(), display.clear(), display.show(self.count, wait=False)| CONFIG |
+|02   | CONFIG         |event.read() == 'A'|event.clear(), count = min(self.count+1, 60), display.show(self.count, wait=False)| CONFIG       |
+|03   | CONFIG         |event.read() == 'B'|event.clear(), count = max(10, self.count-1), display.show(self.count, wait=False)| CONFIG       |
+|04   | CONFIG         |event.read() == 'S'|event.clear(), startTime = utime.ticks_ms()                                       | ARMED        |
+|05   | ARMED          |event.read() == 'A'|event.clear(), count = min(self.count+1, 60), display.show(self.count, wait=False)| ARMED        |
+|06   | ARMED          |event.read() == 'B'|event.clear(), count = max(10, self.count-1), display.show(self.count, wait=False)| ARMED        |
+|07   | ARMED          |utime.ticks_diff(utime.ticks_ms, self.startTime) > 1000|startTime = utime.ticks_ms(), count = self.count - 1, display.show(self.count, wait=False)|ARMED|
+|08   | ARMED          |keyindex == len(self.key)|passIsOK = True, ("for loop" para comparar la contraseña ingresada con la correcta), passIsOK = False, self.keyindex = 0|ARMED|
+|09   | ARMED          | keyindex == len(self.key) && passIsOK|count = 20, display.show(self.count, wait=False), keyindex = 0 | CONFIG       |
+|10   | ARMED          |\[utime.ticks_diff(utime.ticks_ms(), self.startTime) > 1000] && (count == 0)|startTime = utime.ticks_ms(), count = self.count - 1, display.show(self.count, wait=False), display.show(Image.SKULL)| EXPLODED |
+|11   | EXPLODED       |event.read() == 'T'|event.clear(), count = 20, display.show(self.count, wait=False), startTime = utime.ticks_ms()|CONFIG|
+
+
+
+
+
+
