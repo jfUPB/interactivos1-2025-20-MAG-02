@@ -76,7 +76,7 @@ function keyReleased() {
 
 ```
 
-[Enlace a la aplicación modificada](URL)
+[Enlace a la aplicación modificada](https://editor.p5js.org/MAG-02/sketches/iNSjDyRH4)
 
 Código modificado:
 
@@ -87,5 +87,6 @@ Código modificado:
 ## Video
 
 [Video demostratativo](URL)
+
 
 
