@@ -17,4 +17,9 @@ La comunicación del *micro:bit* y el sketch de *p5.js* se da a través del puer
 ## Timeline de proceso de investigación (Actividad 01)
 ### Como no sé organizar nada, simplemente voy a ir poniendo acá entradas de las cositas que van pasando.
 Bueno, so, lo primero fue buscar el caso de estudio pasado para poder usarlo (el link que el profe nos proporcionó simplemente lleva a *p5.js*). Habiendo encontrado el código y habiéndolo probado directamente en el [p5 del profe](https://editor.p5js.org/juanferfranco/sketches/6ovAtsZ10), tomé nota de cómo funciona con el *micro:bit*, y creé un [duplicado del proyecto](https://editor.p5js.org/MAG-02/sketches/Z7NIsRbFm) en caso de necesitar editarlo.
-![Obra de Arte hecha con *micro:bit*]()
+
+<img width="691" height="647" alt="image" src="https://github.com/user-attachments/assets/1534a126-ef06-48d9-a53c-df1f5311eb67" />
+
+
+![Obra de Arte hecha con *micro:bit*](./dibujo.png)
+
