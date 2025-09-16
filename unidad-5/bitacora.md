@@ -5,7 +5,7 @@
 ### Repasa el caso de estudio
 En esta actividad vas a poner a funcionar el caso de estudio de la unidad anterior y lo vas a repasar de nuevo. Mira, es muy importante que le dedique un tiempo generoso a revisar de nuevo el caso de estudio, ya que es un ejemplo muy completo y te va a ayudar a entender mejor el resto de la unidad.
 
-De una, empecemos entonces 🫡
+> De una 🫡
 
 #### Describe cómo se están comunicando el micro:bit y el sketch de p5.js. ¿Qué datos envía el micro:bit?
 La comunicación del *micro:bit* y el sketch de *p5.js* se da a través del puerto serial. El *micro:bit* envía 4 valores (`xValue`, `yValue`, `aState`, `bState`), que son las coordenadas en X y Y según su acelerómetro en forma de `floats`, y el estado de los 2 botones `A` y `B` en booleanos. Además, envía un caracter `\n`, para disiinguir entre cada "tanda" de valores.  
@@ -66,7 +66,12 @@ El es similar a lo que esperaba: El código se ejecuta correctamente, y la funci
 Ahora sí, la duda real: **¿Qué hace `data.trim()`?** Ya que nosotros nunca leemos directamente el string, probar el efecto de esta línea requeriría múltiples prints durante la ejecución (cosa que es simple de hacer, la verdad), pero me dio pereza así que simplemente consulté las [referencias de *p5.js* sobre trim()](https://p5js.org/reference/p5/trim/). Resulta que la función se encarga de borrar espacios en blanco antes y después del contenido del string, sin tocar lo que está en el medio.
 
 ## Actividad 02
+### Caso de estudio: micro:bit
+Vamos a transformar el caso de estudio de la unidad anterior para que ahora la comunicación entre el micro:bit y p5.js se realice mediante un protocolo binario. Primero analizaremos el código del micro:bit y en la siguiente actividad veremos cómo leer los datos en p5.js.
 
+Durante la lectura te indicaré los momentos en los que vale la pena detenerte para analizar 🧐, experimentar 🧪 y reportar ✍️ tus hallazgos en la bitácora de aprendizaje.
+
+> Ah, y yo la actividad pasada escribiendo y experimentando a lo esquizofrénico JAJAJAJAJAJ
 
 
 
