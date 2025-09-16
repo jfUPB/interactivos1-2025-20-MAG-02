@@ -15,13 +15,13 @@ El mensaje tiene los 4 valores en este orden: `xValue`, `yValue`, `aState`, `bSt
 La parte específica encargada de leer los datos se encuentra dentro de la función `draw()`:
 ```js
 if (port.availableBytes() > 0) {
-  let data = port.readUntil("\n"); // (1)
+  let data = port.readUntil("\n");                     // (1)
   if (data) {
-    data = data.trim();            // (2)
-    let values = data.split(",");
+    data = data.trim();                                // (2)
+    let values = data.split(",");                      // (3)
     if (values.length == 4) {
-      microBitX = int(values[0]) + windowWidth / 2;
-      microBitY = int(values[1]) + windowHeight / 2;
+      microBitX = int(values[0]) + windowWidth / 2;    // (4)
+      microBitY = int(values[1]) + windowHeight / 2;   // (4)
       microBitAState = values[2].toLowerCase() === "true";
       microBitBState = values[3].toLowerCase() === "true";
       updateButtonStates(microBitAState, microBitBState);
@@ -31,8 +31,15 @@ if (port.availableBytes() > 0) {
   }
 }
 ```
+1. Lee la información recibida por el puerto serial hasta encontrar un `\n` y lo almacena en un string `data`.
+2. Borra los espacios (y otros caracteres considerados *whitespace*) de `data`.
+3. Separa `data` en strings individuales por las comas `,` y los almacena en el array `values`.
+4. Toma el valor dado por el *micro:bit* de su X y Y y los suma a `windowWidth / 2` y `windowHeight / 2` respectivamente, para que el 0, 0 del *micro:bit* sea el centro del canvas.
 #### ¿Cómo se generan los eventos A pressed y B released que se generan en p5.js a partir de los datos que envía el micro:bit?
+Se generan dentro de la función `updateButtonStates(newAState, newBState)`. En ambos casos se encarga de compara el estado anterior de A o B con el que se acaba de recibir, y luego almacena el estado actual para comparar en el próximo frame. Esta acción es un poco redundante para A, pues funciona al ser presionado (es directo y podría tomarse simplemente en valor enviado por el *micro:bit*), pero es absolutamente necesaria para que B pueda funcionar al ser soltado (se busca que el estado previo sea `True` y el nuevo sea `False`).
 #### Capturas de pantalla de los algunos dibujos que hayas hecho con el sketch.
+![Obra de Arte hecha con *micro:bit*](./dibujo.png)
+<img width="900" height="815" alt="image" src="https://github.com/user-attachments/assets/031699b9-d088-4f67-9fad-a9a88c74902f" />
 
 ## Timeline de proceso de investigación (Actividad 01)
 ### Como no sé organizar nada, simplemente voy a ir poniendo acá entradas de las cositas que van pasando.
@@ -55,7 +62,25 @@ if (data) {
 Asumo que el `if (data)` simplemente verifica que sí se esté recibiendo algo. Creo que es una redundancia en nuestro caso porque sé que el código que tenemos funciona y los datos están siendo enviados correctamente. Aún así, intentaré ejecutar el código sin este `if` inicial para ver qué sucede.  
 **Resultado:**  
 <img width="1919" height="957" alt="image" src="https://github.com/user-attachments/assets/8c57e260-97d1-4a40-8232-95b996879b9e" />
-El es similar a lo que esperaba: El código se ejecuta correctamente, y la funcionalidad no se ve afectada. Lo único es que, aparentemente, *p5.js* está un poco confundido y "deja perder" algunos datos, o quizá agrupa datos que no deberían ir juntos, por lo que muestra constantemente el error `No se están recibiendo 4 datos del micro:bit`
+El es similar a lo que esperaba: El código se ejecuta correctamente, y la funcionalidad no se ve afectada. Lo único es que, aparentemente, *p5.js* está un poco confundido y "deja perder" algunos datos, o quizá agrupa datos que no deberían ir juntos, por lo que muestra constantemente el error `No se están recibiendo 4 datos del micro:bit`. Quizá ese `if (data)` obliga a *p5.js* a procesar un poco más lento los datos y asegurarse de no perder información.  
+Ahora sí, la duda real: **¿Qué hace `data.trim()`?** Ya que nosotros nunca leemos directamente el string, probar el efecto de esta línea requeriría múltiples prints durante la ejecución (cosa que es simple de hacer, la verdad), pero me dio pereza así que simplemente consulté las [referencias de *p5.js* sobre trim()](https://p5js.org/reference/p5/trim/). Resulta que la función se encarga de borrar espacios en blanco antes y después del contenido del string, sin tocar lo que está en el medio.
+
+## Actividad 02
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
