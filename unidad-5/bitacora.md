@@ -73,12 +73,21 @@ Durante la lectura te indicaré los momentos en los que vale la pena detenerte p
 
 > Ah, y yo la actividad pasada escribiendo y experimentando a lo esquizofrénico JAJAJAJAJAJ
 
+### Resultados de Experimentación:
+Abre la aplicación, configura el puerto, deja los valores por defecto y presiona Conectar. Selecciona el puerto del micro:bit (mbed Serial port) y presiona Conectar. Luego, en la sección de Recepción de Datos, en Mostrar datos como, selecciona Texto.
 
+#### 🧐🧪✍️ Captura el resultado del experimento anterior. ¿Por qué se ve este resultado?
+Captura:  
+Lo que se logra ver ahí es  
+  
+Ahora cambia la opción de Mostrar datos como a Todo en Hex y vuelve a capturar el resultado.
+#### 🧐🧪✍️ Captura el resultado del experimento anterior. Lo que ves ¿Cómo está relacionado con esta línea de código?
+```cpp
+data = struct.pack('>2h2B', xValue, yValue, int(aState), int(bState))
+```
+**No te parece que el resultado es un poco más difícil de leer que el texto en ASCII?**
 
-
-
-
-
+🧐🧪✍️ ¿Qué ventajas y desventajas ves en usar un formato binario en lugar de texto en ASCII?
 
 
 
