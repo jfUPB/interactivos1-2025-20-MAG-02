@@ -137,3 +137,5 @@ Algo que sí creo que se puede mencionar es el "subproceso" (no creo que sea vá
 ## Actividad 04
 ### Generando patrones visuales
 
+[Sketch](https://editor.p5js.org/MAG-02/sketches/B9EQ063wN)
+[Ref](https://editor.p5js.org/davi0309/sketches/IY58J5_Cs)
