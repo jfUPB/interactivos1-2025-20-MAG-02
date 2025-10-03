@@ -112,3 +112,68 @@ Compara el bucle `draw()` de p5.js con este modelo de “esperar a que algo pase
 #### ¿Por qué crees que podría ser útil usar JavaScript tanto en el cliente (navegador) como en el servidor? ¿Se te ocurre alguna ventaja para los desarrolladores?
 
 #### Resume con tus propias palabras la diferencia fundamental entre una comunicación `HTTP` tradicional y una comunicación usando `WebSockets`/`Socket.IO`. ¿En qué tipo de aplicaciones has visto o podrías imaginar que se usa esta comunicación en tiempo real?
+
+## Actividad 03
+### Analizaremos juntos el código del servidor `server.js` línea por línea.
+
+### Experimento 1
+* Detén el servidor si está corriendo.
+* Cambia la primera ruta de /page1 a /pagina_uno.
+* Inicia el servidor.
+* Intenta acceder a http://localhost:3000/page1. ¿Funciona?
+* Ahora intenta acceder a http://localhost:3000/pagina_uno. ¿Funciona?
+* ¿Qué te dice esto sobre cómo el servidor asocia URLs con respuestas? Restaura el código.
+
+### Experimento 2
+* Asegúrate de que el servidor esté corriendo (npm start).
+* Abre http://localhost:3000/page1 en una pestaña. Observa la terminal del servidor. ¿Qué mensaje ves? Anota el ID.
+* Abre http://localhost:3000/page2 en OTRA pestaña. Observa la terminal. ¿Qué mensaje ves? ¿El ID es diferente?
+* Cierra la pestaña de page1. Observa la terminal. ¿Qué mensaje ves? ¿Coincide el ID con el que anotaste?
+* Cierra la pestaña de page2. Observa la terminal.
+
+### Experimento 3
+* Inicia el servidor y abre page1 y page2.
+* Mueve la ventana de page1. Observa la terminal del servidor. ¿Qué evento se registra (win1update o win2update)? ¿Qué datos (Data:) ves?
+* Mueve la ventana de page2. Observa la terminal. ¿Qué evento se registra ahora? ¿Qué datos ves?
+* Experimento clave: cambia socket.broadcast.emit(‘getdata’, page1); por socket.emit(‘getdata’, page1); (quitando broadcast). Reinicia el servidor, abre ambas páginas. Mueve page1. ¿Se actualiza la visualización en page2? ¿Por qué sí o por qué no? (Pista: ¿A quién le envía el mensaje socket.emit?). Restaura el código a broadcast.emit.
+
+### Experimento 4
+* Detén el servidor.
+* Cambia const port = 3000; a const port = 3001;.
+* Inicia el servidor. ¿Qué mensaje ves en la consola? ¿En qué puerto dice que está escuchando?
+* Intenta abrir http://localhost:3000/page1. ¿Funciona?
+* Intenta abrir http://localhost:3001/page1. ¿Funciona?
+* ¿Qué aprendiste sobre la variable port y la función listen? Restaura el puerto a 3000.
+
+## Actividad 04
+### Explorando los clientes (p5.js + Socket.IO)
+
+### Experimento 1
+* Abre page2.html en tu navegador (con el servidor corriendo).
+* Abre la consola de desarrollador (F12).
+* Detén el servidor Node.js (Ctrl+C).
+* Refresca la página page2.html. Observa la consola del navegador. ¿Ves algún error relacionado con la conexión? ¿Qué indica?
+* Vuelve a iniciar el servidor y refresca la página. ¿Desaparecen los errores?
+
+### Experimento 2
+* Comenta la línea socket.emit(‘win2update’, currentPageData, socket.id); dentro del listener connect.
+* Reinicia el servidor y refresca page1.html y page2.html.
+* Mueve la ventana de page2 un poco para que envíe una actualización.
+* ¿Qué pasó? ¿Por qué?
+
+### Experimento 3
+* Abre ambas páginas (es posible que ya las tengas abiertas).
+* Mueve la ventana de page1. Observa la consola del navegador de page2. ¿Qué datos muestra?
+* Mueve la ventana de page2. Observa la consola de page1. ¿Qué pasa? ¿Por qué?
+
+### Experimento 4
+* Observa checkWindowPosition() en page2.js y modifica el código del if para comprobar si el código dentreo de este se ejecuta.
+* Mueve cada ventana y observa las consolas.
+* ¿Qué puedes concluir y por qué?
+
+### Experimento 5
+* Cambia el background(220) para que dependa de la distancia entre las ventanas. Puedes calcular la magnitud del resultingVector usando let distancia = resultingVector.mag(); y luego usa map() para convertir esa distancia a un valor de gris o color. background(map(distancia, 0, 1000, 255, 0)); (ajusta el rango 0-1000 según sea necesario).
+* Inventa otra modificación creativa.
+
+## Actividad 05
+Basado en la infraestructura de comunicación del caso de estudio vas a crear tu propia aplicación interactiva en tiempo real. Diseño algo completamente nuevo usando la misma tecnología de comunicación. ¡Sé creativo! Quiero insistirte con algo. No se trata de solo cambiar el diseño o la apariencia de la aplicación. Se trata de crear algo nuevo, diferente y original.
