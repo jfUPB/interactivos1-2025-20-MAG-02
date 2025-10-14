@@ -35,10 +35,48 @@ Habiendo subido esta imagen, noté que no había puesto Público el puerto "Forw
 `express.static('public')` es la línea que establece que las solicitudes de los distintos clientes hechas al servidor serán "enrutadas" hacia la carpeta `public`, y dentro de esta podrán encontrar `desktop` o `mobile` según la ruta que establezca el usuario. Esto se puede hacer porque dentro de cada subcarpeta de `public` están los índices `index.html` que abrirá el navegador y sketch `sketch.js` que hace funcionar la página con el server.  
 Respecto a usar `app.get('/ruta', ...)`, este método ahorra el tener una carpeta dedicada `views` y además tener que dedicar un pequeño pedazo de código para cada vista. En la unidad anterior cada página hacía la solicitud de las bibliotecas necesarias que estaban ubicadas en la carpeta `public`.
 #### Explica detalladamente el flujo de un mensaje táctil: ¿Qué evento lo envía desde el móvil? ¿Qué evento lo recibe el servidor? ¿Qué hace el servidor con él? ¿Qué evento lo envía el servidor al escritorio? ¿Por qué se usa socket.broadcast.emit en lugar de io.emit o socket.emit en este caso?
+La función encargada de enviar los mensajes desde el móvil es `touchMoved()`:
+```js
+function touchMoved() {
+    if (socket && socket.connected) { 
+        let dx = abs(mouseX - lastTouchX);
+        let dy = abs(mouseY - lastTouchY);
 
+        if (dx > threshold || dy > threshold || lastTouchX === null) {
+            let touchData = {
+                type: 'touch',
+                x: mouseX,
+                y: mouseY
+            };
+            socket.emit('message', touchData);
+
+            lastTouchX = mouseX;
+            lastTouchY = mouseY;
+        }
+    }
+    return false;
+}
+```
+Esta función específicamente *solo* envía información (`socket.emit('message', touchData)`) cuando el usuario está tocando la pantalla **y se mueve** más que un *threshold* especificado. También verifica que `socket && socket.connected` sean *True*.  
+En el servidor, este pedacito de código es el que está atento a los mensajes:
+```js
+socket.on('message', (message) => {
+        console.log('Received message =>', message);
+        socket.broadcast.emit('message', message);
+    });
+```
+Y lo que hace es imprimir el mensaje recibido en la consola y luego reenviarlo, o más bien, *broadcast*earlo. La razón de usar *broadcast* en vez de algún *emit* directo es para poder tener funcionalidad con varios dispositivos a la vez (estén en `/desktop` o `/mobile`).
 #### Si conectaras dos computadores de escritorio y un móvil a este servidor, y movieras el dedo en el móvil, ¿Quién recibiría el mensaje retransmitido por el servidor? ¿Por qué?
-
+De nuevo, debido al `socket.broadcast.emit(...)`, ambos computadores de escritorio recibirán el mensaje, y ambos se actualizarán acorde. De hecho, realicé el experimento con mi compañero Jhon en clase, y funcionó en ambos sentidos (2 clientes en `/desktop`, luego 2 clientes en `/mobile`).
 #### ¿Qué información útil te proporcionan los mensajes console.log en el servidor durante la ejecución?
+El servidor envía a la consola 4 mensajes distintos, siendo uno de ellos el puerto al que se conectó, y los otros 3 reacciones a los clientes. Envía un mensaje al conectarse y desconectarse un cliente, pero el mensaje más común es su "Received message =>". Los logs se ven así:
+```bash
+Server is listening on http://localhost:3000
+New client connected
+Received message => { type: 'touch', x: 129, y: 213 }
+Client disconnected
+```
+El mensaje "Received message =>" trae las coordenadas del `touch` realizado por el usuario, que son necesarias para que el `/desktop` pueda recalcular la posición del círculo en pantalla.
 
 
 
