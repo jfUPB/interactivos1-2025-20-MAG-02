@@ -30,5 +30,16 @@ Vista en `https://zvsmgggn-3000.use2.devtunnels.ms/mobile`:
 
 Habiendo subido esta imagen, noté que no había puesto Público el puerto "Forwardeado", lo que explica por qué tuve que iniciar sesión en *GitHub* antes de conectarme al *DevTunnel*.
 
+## Actividad 03
+#### ¿Cuál es la función principal de express.static(‘public’) en este servidor? ¿Cómo se compara con el uso de app.get(‘/ruta’, …) del servidor de la Unidad 6?
+`express.static('public')` es la línea que establece que las solicitudes de los distintos clientes hechas al servidor serán "enrutadas" hacia la carpeta `public`, y dentro de esta podrán encontrar `desktop` o `mobile` según la ruta que establezca el usuario. Esto se puede hacer porque dentro de cada subcarpeta de `public` están los índices `index.html` que abrirá el navegador y sketch `sketch.js` que hace funcionar la página con el server.  
+Respecto a usar `app.get('/ruta', ...)`, este método ahorra el tener una carpeta dedicada `views` y además tener que dedicar un pequeño pedazo de código para cada vista. En la unidad anterior cada página hacía la solicitud de las bibliotecas necesarias que estaban ubicadas en la carpeta `public`.
+#### Explica detalladamente el flujo de un mensaje táctil: ¿Qué evento lo envía desde el móvil? ¿Qué evento lo recibe el servidor? ¿Qué hace el servidor con él? ¿Qué evento lo envía el servidor al escritorio? ¿Por qué se usa socket.broadcast.emit en lugar de io.emit o socket.emit en este caso?
+
+#### Si conectaras dos computadores de escritorio y un móvil a este servidor, y movieras el dedo en el móvil, ¿Quién recibiría el mensaje retransmitido por el servidor? ¿Por qué?
+
+#### ¿Qué información útil te proporcionan los mensajes console.log en el servidor durante la ejecución?
+
+
 
 
