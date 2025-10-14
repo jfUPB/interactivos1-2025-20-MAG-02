@@ -78,6 +78,19 @@ Client disconnected
 ```
 El mensaje "Received message =>" trae las coordenadas del `touch` realizado por el usuario, que son necesarias para que el `/desktop` pueda recalcular la posición del círculo en pantalla.
 
+## Actividad 04
+#### Realiza un diagrama donde muestres el flujo completo de datos y eventos entre los tres componentes: móvil, servidor y escritorio. Puedes ilustrar con un ejemplo de coordenadas táctiles (x, y) y cómo viajan a través del sistema.
+Primero que nada, desde el cliente `/mobile` se envía un mensaje con el tag `'message'`. Este mensaje carga 3 cosas: Un *type* (`'touch'`), y 2 coordenadas `x, y`.
+```js
+socket.emit('message', touchData);
+```
+Este mensaje pasa primero por el `server.js`. Ahí, el servidor lo imprime en la consola y lo emite como un broadcast:
+```js
+socket.on('message', (message) => {
+    console.log('Received message =>', message);
+    socket.broadcast.emit('message', message);
+});
+```
 
 
 
