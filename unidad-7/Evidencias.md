@@ -14,4 +14,8 @@
 > 0.5: realicé 1 actividad completa y la autoevaluación.  
 > 0: no realicé ninguna actividad o no realicé la autoevaluación.
 
-Bueno, so, pa' esta Unidad creo que cómodamente puedo decir que las 4 actividades de Set y Seek están 100% completas, así que empezamos con un 3 muy cómodo. La actividad 5,
+Bueno, so, pa' esta Unidad creo que cómodamente puedo decir que las 4 actividades de Set y Seek están 100% completas, así que empezamos con un 3 muy cómodo.
+
+La actividad 05, luego de mucho esfuerzo, quedó completa y (a mi parecer) muy bien implementada, así que diré con confianza que esta unidad debería tener...
+
+# Nota Final Propuesta: 5.0
