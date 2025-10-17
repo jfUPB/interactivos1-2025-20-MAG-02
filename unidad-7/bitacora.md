@@ -131,14 +131,229 @@ Work in progress 🫡
 #### 3. Incluye todos los códigos (servidor y clientes) en tu bitácora.
 Código de `server.js`:
 ```js
-This is just gonna be the exact same server ngl
+const express = require('express');
+const http = require('http');
+const socketIO = require('socket.io');
+
+const app = express();
+const server = http.createServer(app); 
+const io = socketIO(server); 
+const port = 3000;
+
+app.use(express.static('public'));
+
+io.on('connection', (socket) => {
+    console.log('New client connected');
+    socket.on('message', (message) => {
+        console.log('Received message =>', message);
+        socket.broadcast.emit('message', message);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Client disconnected');
+    });
+});
+
+server.listen(port, () => {
+    console.log(`Server is listening on http://localhost:${port}`);
+});
+```
+`sketch.js` en `/mobile`:
+```js
+let socket;
+let lastTouchX = null; 
+let lastTouchY = null; 
+const threshold = 5;
+
+function setup() {
+    createCanvas(windowWidth - 25, windowHeight - 25);
+    background(50);
+    socket = io();
+
+    socket.on('connect', () => {
+        console.log('Connected to server');
+    });
+
+    socket.on('message', (data) => {
+        console.log(`Received message: ${data}`);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Disconnected from server');
+    });
+
+    socket.on('connect_error', (error) => {
+        console.error('Socket.IO error:', error);
+    });
+}
+
+function draw() {
+    background(100);
+    fill(255, 128, 0);
+    textAlign(CENTER, CENTER);
+    textSize(24);
+    text('Toca para empezar \nla música, y desliza el dedo \npara afectar la visualización', width / 2, height / 2);
+}
+
+//Función para detectar el toque
+function touchStarted() {
+  socket.emit('message', { type: 'touchStart' });
+  return false;
+}
+
+function touchMoved() {
+    if (socket && socket.connected) { 
+        let dx = abs(mouseX - lastTouchX);
+        let dy = abs(mouseY - lastTouchY);
+
+        if (dx > threshold || dy > threshold || lastTouchX === null) {
+            let touchData = {
+                type: 'touchMove',
+                x: mouseX,
+                y: mouseY
+            };
+            socket.emit('message', touchData);
+
+            lastTouchX = mouseX;
+            lastTouchY = mouseY;
+        }
+    }
+    return false;
+}
+
+//Función para detectar que se acabó el toque
+function touchEnded() {
+  socket.emit('message', { type: 'touchEnd' });
+  return false;
+}
 ```
 `sketch.js` en `/desktop`:
 ```js
-Probablemente este sea igual too JAJAJAJAJAJAJ
+let socket;
+let fft; //Esto es pa' poder mirar las ondas de la música woo
+
+const port = 3000;
+
+//Mis variables
+let song;
+let activeTouches = 0;
+let bars = [];
+let alphas = [50, 50, 50, 50, 50]; //La transparencia pa' c/u de las barras
+
+function preload() {
+    song = loadSound('your_idol.mp3');
+}
+
+function setup() {
+    createCanvas(windowWidth - 50, windowHeight - 50);
+    background(50);
+
+    //Para la música, again, crea una instancia de la clase FFT (que es Fast Fourier Transform)
+    fft = new p5.FFT();
+
+    //Y esto es pa' las barras. Aquí admito que fue ChatGPT :p
+    const spectrum = fft.analyze();
+    for (let i = 0; i < 3; i++) {
+        bars.push({
+            from: i * (spectrum.length - 500) / 3,
+            to: (i + 1) * (spectrum.length - 500) / 3,
+            energy: 0
+        });
+    }
+
+    socket = io(); 
+
+    socket.on('connect', () => {
+        console.log('Connected to server');
+    });
+
+    socket.on('message', (data) => {
+        console.log(`Received message:`, data);
+        if (data && data.type === 'touchStart') {
+            activeTouches++; //A veces este me causa que la canción sea inpausable pero no lo supe corregir :p
+        }
+        else if (data && data.type === 'touchEnd') {
+            activeTouches = Math.max(0, activeTouches--); //Solo usar "activeTouches--;" podría causar negativos si la gente se desconecta mal
+        }
+        else if (data && data.type === 'touchMove') {
+            //Volumen según coordenada y
+            adjustVolume(data.y);
+
+            //Aplha de las barras según coordenada x
+            const normX = data.x / (windowWidth / 3);
+            const index = int(normX * 3); // de 0 a 2
+            if (index >= 0 && index < 3) {
+                alphas[index] = constrain(alphas[index] + 10, 50, 255);
+
+                //Machetazo táctico
+                if (index === 0) {
+                    // Suavemente disminuir alpha con el tiempo
+                    alphas[1] = max(alphas[1] - 10, 50);
+                    alphas[2] = max(alphas[2] - 10, 50);
+                }
+                else if (index === 1) {
+                    // Suavemente disminuir alpha con el tiempo
+                    alphas[2] = max(alphas[2] - 10, 50);
+                    alphas[0] = max(alphas[0] - 10, 50);
+                }
+                else if (index === 2) {
+                    // Suavemente disminuir alpha con el tiempo
+                    alphas[0] = max(alphas[0] - 10, 50);
+                    alphas[1] = max(alphas[1] - 10, 50);
+                }
+            } //Also ChatGPT con ajustes
+        }
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Disconnected from server');
+    });
+
+    socket.on('connect_error', (error) => {
+        console.error('Socket.IO error:', error);
+    });
+}
+
+function draw() {
+    background(50);
+
+    if (activeTouches > 0 && !song.isPlaying()) {
+        song.loop();
+    }
+    else if (activeTouches === 0 && song.isPlaying()) {
+        song.pause();
+    }
+
+    const spectrum = fft.analyze();
+    //vvv This is ChatGPT too vvv
+    // Calcular energía promedio de cada rango
+    for (let i = 0; i < bars.length; i++) {
+        const range = spectrum.slice(bars[i].from, bars[i].to);
+        const avg = range.reduce((a, b) => a + b, 0) / range.length;
+        bars[i].energy = avg;
+    }
+
+    // Dibujar las barras
+    const barWidth = (windowWidth - 100) / 3;
+    for (let i = 0; i < bars.length; i++) {
+        const h = map(bars[i].energy, 0, 255, 0, height);
+        fill(100 + i * 30, 200, 255, alphas[i]);
+        noStroke();
+        rect(i * barWidth, height - h, barWidth - 10, h, 10);
+    }
+}
+
+function adjustVolume(y) {
+  const normY = y / height;
+  let vol = song.getVolume();
+
+  if (normY < 0.3) vol *= 1.1; // más alto si sube
+  else if (normY > 0.7) vol *= 0.9; // más bajo si baja
+
+  // limitar a [0,1]
+  vol = constrain(vol, 0, 1);
+  song.setVolume(vol);
+}
 ```
-`sketch.js` en `/desktop`:
-```js
-Este sí va a cambiar, así sea poquito
-```
+
 
