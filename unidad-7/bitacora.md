@@ -116,7 +116,14 @@ Y toma directamente las coordenadas del toque del usuario en `/mobile` para asig
 ## Actividad 05
 #### 1. Diseña una aplicación interactiva que use el touch del móvil para controlar una visuales de tema musical de tu elección. Las visuales correrán en una aplicación de escritorio (desktop). Recuerda que ambas aplicaciones las construirás usando p5.js y utilizando el servidor Node.js como puente.
 Bueno, empecemos con la idea general de diseño:
-Lo primero que pensé desde la clase en la que se nos explicó lo que sería esta **Actividad 05** es que quería hacer algo donde todo el salón aportara, pero no estaba seguro de cómo hacerlo. Creo que puedo intentar hacer algo que permita, según la posición del dedo de los usuarios en la pantalla, cambie el volumen (movimiento sobre el eje *y*), y quizá algo con la visualización directamente según el movimiento en *x*? No estoy muy seguro de cómo será. Voy a mirar qué funciones y cosas tiene *p5.js* para manipular el audio y tal.
+Lo primero que pensé desde la clase en la que se nos explicó lo que sería esta **Actividad 05** es que quería hacer algo donde todo el salón aportara, pero no estaba seguro de cómo hacerlo. Creo que puedo intentar hacer algo que permita, según la posición del dedo de los usuarios en la pantalla, cambie el volumen (movimiento sobre el eje *y*), y quizá algo con la visualización directamente según el movimiento en *x*? No estoy muy seguro de cómo será. Voy a mirar qué funciones y cosas tiene *p5.js* para manipular el audio y tal.  
+Uy uy uy, me acabo de acordar de otra cosa: Como la función `touchMoved()` no detecta un "toque" inicial, voy a incluir que la canción sólo suene cuando al menos un usuario está tocando la pantalla :>
+
+### Idea semi terminada:
+Esto es lo que va a pasar en el visualizador según los toques y movimientos de los usuarios:
+* **La canción empezará a sonar cuando toquen la pantalla.** Creo que eso hace que también se sienta más interactivo todo y ps pa' que durante la clase no estalle los oidos de todo el mundo (maybe).
+* **Según su coordenada *y* multiplicarán el volúmen de la música de a pocos.** Creo que así se puede que varias personas interactúen con el visualizador y se note que están afectando la música. Creo que la mejor manera es hacer que cada cierto % de la altura aumente o disminuya el multiplicador de volumen en *0.1*.
+* **Según su coordenada *x* cambiarán el *alpha* de unas barras que sirven como visualizadores de ondas (como en el ejemplo que nos mostró el profe).
 
 #### 2. Implementa tu diseño. Puedes usar IA generativa para ayudarte a escribir el código, pero primero debes hacer el diseño de lo que quieres.
 Work in progress 🫡
@@ -126,11 +133,12 @@ Código de `server.js`:
 ```js
 This is just gonna be the exact same server ngl
 ```
-Código de `mobile.js`:
+`sketch.js` en `/desktop`:
 ```js
 Probablemente este sea igual too JAJAJAJAJAJAJ
 ```
-Código de `desktop.js`:
+`sketch.js` en `/desktop`:
 ```js
 Este sí va a cambiar, así sea poquito
 ```
+
