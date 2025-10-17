@@ -82,7 +82,17 @@ El mensaje "Received message =>" trae las coordenadas del `touch` realizado por 
 #### Realiza un diagrama donde muestres el flujo completo de datos y eventos entre los tres componentes: móvil, servidor y escritorio. Puedes ilustrar con un ejemplo de coordenadas táctiles (x, y) y cómo viajan a través del sistema.
 Primero que nada, desde el cliente `/mobile` se envía un mensaje con el tag `'message'`. Este mensaje carga 3 cosas: Un *type* (`'touch'`), y 2 coordenadas `x, y`.
 ```js
-socket.emit('message', touchData);
+if (dx > threshold || dy > threshold || lastTouchX === null) {
+    let touchData = {
+        type: 'touch',
+        x: mouseX,
+        y: mouseY
+    };
+    socket.emit('message', touchData);
+
+    lastTouchX = mouseX;
+    lastTouchY = mouseY;
+}
 ```
 Este mensaje pasa primero por el `server.js`. Ahí, el servidor lo imprime en la consola y lo emite como un broadcast:
 ```js
@@ -91,6 +101,20 @@ socket.on('message', (message) => {
     socket.broadcast.emit('message', message);
 });
 ```
+Ahora, el mensaje llega al cliente `/desktop`, el cual lo recibe con este código:
+```js
+socket.on('message', (data) => {
+    console.log(`Received message:`, data);
+    if (data && data.type === 'touch') {
+        circleX = data.x;
+        circleY = data.y;
+    }
+});
+```
+Y toma directamente las coordenadas del toque del usuario en `/mobile` para asignárselas al círculo en pantalla. Así de simple es :p
+
+## Actividad 05
+
 
 
 
