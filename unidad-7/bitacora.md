@@ -114,7 +114,23 @@ socket.on('message', (data) => {
 Y toma directamente las coordenadas del toque del usuario en `/mobile` para asignárselas al círculo en pantalla. Así de simple es :p
 
 ## Actividad 05
+#### 1. Diseña una aplicación interactiva que use el touch del móvil para controlar una visuales de tema musical de tu elección. Las visuales correrán en una aplicación de escritorio (desktop). Recuerda que ambas aplicaciones las construirás usando p5.js y utilizando el servidor Node.js como puente.
+Bueno, empecemos con la idea general de diseño:
+Lo primero que pensé desde la clase en la que se nos explicó lo que sería esta **Actividad 05** es que quería hacer algo donde todo el salón aportara, pero no estaba seguro de cómo hacerlo. Creo que puedo intentar hacer algo que permita, según la posición del dedo de los usuarios en la pantalla, cambie el volumen (movimiento sobre el eje *y*), y quizá algo con la visualización directamente según el movimiento en *x*? No estoy muy seguro de cómo será. Voy a mirar qué funciones y cosas tiene *p5.js* para manipular el audio y tal.
 
+#### 2. Implementa tu diseño. Puedes usar IA generativa para ayudarte a escribir el código, pero primero debes hacer el diseño de lo que quieres.
+Work in progress 🫡
 
-
-
+#### 3. Incluye todos los códigos (servidor y clientes) en tu bitácora.
+Código de `server.js`:
+```js
+This is just gonna be the exact same server ngl
+```
+Código de `mobile.js`:
+```js
+Probablemente este sea igual too JAJAJAJAJAJAJ
+```
+Código de `desktop.js`:
+```js
+Este sí va a cambiar, así sea poquito
+```
