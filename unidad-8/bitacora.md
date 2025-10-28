@@ -33,4 +33,4 @@ Bocetos hechos en Paint:
 <img width="1205" height="591" alt="image" src="https://github.com/user-attachments/assets/47ddc178-0ee7-46b6-8f84-113d662ce815" />
 
 ### 5. Haz un diagrama que explique cómo se comunicarán los diferentes componentes del sistema.
-
+![Diagrama de Flujo]((Flujo del Sistema.png)
